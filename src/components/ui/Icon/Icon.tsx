@@ -1,9 +1,8 @@
 import { icons } from './icons'
 import type { IconSize } from './types'
+import { cn } from '../../../lib/utils'
 
 type IconName = keyof typeof icons
-
-// type IconSize = 'sm' | 'md' | 'lg'
 
 type Props = {
   name: IconName
@@ -21,14 +20,18 @@ const sizes: Record<IconSize, string> = {
 export function Icon({
   name,
   size = 'md',
-  className = '',
+  className,
   alt,
 }: Props) {
   return (
     <img
       src={icons[name]}
       alt={alt || name}
-      className={`${sizes[size]} ${className}`}
+      className={cn(
+        sizes[size],
+        'inline-block',
+        className
+      )}
     />
   )
 }

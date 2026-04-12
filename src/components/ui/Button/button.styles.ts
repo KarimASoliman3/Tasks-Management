@@ -17,7 +17,7 @@ export const sizes: Record<ButtonSize, string> = {
 }
 
 /* =========================
-   VARIANTS (USING CSS VARIABLES)
+   VARIANTS
 ========================= */
 export const variants: Record<ButtonVariant, string> = {
   primary: `
@@ -25,7 +25,6 @@ export const variants: Record<ButtonVariant, string> = {
     text-white
     font-semibold
   `,
-
   secondary: `
     bg-transparent
     text-primary
@@ -33,7 +32,7 @@ export const variants: Record<ButtonVariant, string> = {
   `,
     // border
     // border-[var(--color-primary)]
- 
+  
     ghost: `
     bg-transparent
     text-slate-600

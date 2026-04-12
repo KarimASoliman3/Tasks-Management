@@ -1,4 +1,5 @@
 import React from 'react'
+import { cn } from '../../../lib/utils'
 import {
   baseStyles,
   sizes,
@@ -27,7 +28,7 @@ export function Button({
   disabled = false,
   leftIcon,
   rightIcon,
-  className = '',
+  className,
   onClick,
 }: Props) {
   const isDisabled = disabled || loading
@@ -36,19 +37,25 @@ export function Button({
     <button
       onClick={onClick}
       disabled={isDisabled}
-      className={`
-        ${baseStyles}
-        ${sizes[size]}
-        ${variants[variant]}
-        ${isDisabled ? 'opacity-50 cursor-not-allowed' : 'hover:opacity-90'}
-        ${className}
-      `}
+      className={cn(
+        baseStyles,
+        sizes[size],
+        variants[variant],
+        isDisabled
+          ? 'opacity-50 cursor-not-allowed'
+          : 'hover:opacity-90',
+        className
+      )}
     >
-      {!loading && leftIcon && <span>{leftIcon}</span>}
+      {!loading && leftIcon && (
+        <span className="flex items-center">{leftIcon}</span>
+      )}
 
       {loading ? 'Loading...' : children}
 
-      {!loading && rightIcon && <span>{rightIcon}</span>}
+      {!loading && rightIcon && (
+        <span className="flex items-center">{rightIcon}</span>
+      )}
     </button>
   )
 }
