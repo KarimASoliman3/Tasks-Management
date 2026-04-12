@@ -1,0 +1,97 @@
+@layer utilities {
+  /* =========================
+     🎨 BACKGROUND COLORS
+  ========================== */
+  .bg-primary {
+    background-color: var(--color-primary);
+  }
+  .bg-primary-container {
+    background-color: var(--color-primary-container);
+  }
+
+  .bg-surface-highest {
+    background-color: var(--color-surface-highest);
+  }
+  .bg-surface-low {
+    background-color: var(--color-surface-low);
+  }
+
+  .bg-background {
+    background-color: var(--color-background);
+  }
+
+  .bg-success {
+    background-color: var(--color-success);
+  }
+  .bg-error {
+    background-color: var(--color-error);
+  }
+  .bg-warning {
+    background-color: var(--color-warning);
+  }
+
+  /* =========================
+     🎨 TEXT COLORS
+  ========================== */
+  .text-primary {
+    color: var(--color-primary);
+  }
+
+  .text-slate-900 {
+    color: var(--color-slate-900);
+  }
+  .text-slate-600 {
+    color: var(--color-slate-600);
+  }
+  .text-slate-300 {
+    color: var(--color-slate-300);
+  }
+
+  .text-success {
+    color: var(--color-success);
+  }
+  .text-error {
+    color: var(--color-error);
+  }
+  .text-warning {
+    color: var(--color-warning);
+  }
+
+  /* =========================
+     🔤 TYPOGRAPHY SYSTEM
+  ========================== */
+  .text-display-lg {
+    font-size: var(--text-display-lg);
+    line-height: 56px;
+    letter-spacing: -2.8px;
+    font-weight: 700;
+  }
+
+  .text-headline-lg {
+    font-size: var(--text-headline-lg);
+    line-height: 40px;
+  }
+
+  .text-title-md {
+    font-size: var(--text-title-md);
+    line-height: 27px;
+  }
+
+  .text-body-md {
+    font-size: var(--text-body-md);
+    line-height: 22.75px;
+  }
+
+  .text-label-sm {
+    font-size: var(--text-label-sm);
+    line-height: 16.5px;
+    letter-spacing: 1.1px;
+  }
+
+  /* =========================
+     🔤 FONT FAMILY
+  ========================== */
+  .font-sans {
+    font-family: var(--font-sans);
+  }
+}
