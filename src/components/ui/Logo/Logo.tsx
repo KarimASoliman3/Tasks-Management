@@ -1,6 +1,7 @@
 import { forwardRef } from 'react'
 import { cn } from '../../../lib/utils'
 import type { LogoProps } from './types'
+import logo from '../../../assets/logo.svg'
 
 const sizes = {
   sm: {
@@ -22,7 +23,16 @@ const sizes = {
 
 export const Logo = forwardRef<HTMLDivElement, LogoProps>(
   (
-    { text, src, alt = 'logo', size = 'md', asLink = false, href = '/', className, ...props },
+    {
+      text,
+      src = logo,
+      alt = 'logo',
+      size = 'md',
+      asLink = false,
+      href = '/',
+      className,
+      ...props
+    },
     ref,
   ) => {
     const selected = sizes[size]

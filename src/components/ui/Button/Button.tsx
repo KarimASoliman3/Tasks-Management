@@ -12,49 +12,42 @@ type Props = {
   children: React.ReactNode
   variant?: ButtonVariant
   size?: ButtonSize
-  loading?: boolean
-  disabled?: boolean
-  leftIcon?: React.ReactNode
-  rightIcon?: React.ReactNode
   className?: string
-  onClick?: () => void
+  disabled?: boolean
+  loading?: boolean
+  'aria-disabled'?: boolean
 }
 
 export function Button({
   children,
   variant = 'primary',
   size = 'md',
-  loading = false,
-  disabled = false,
-  leftIcon,
-  rightIcon,
   className,
-  onClick,
+  disabled,
+  loading,
+  ...ariaProps
 }: Props) {
   const isDisabled = disabled || loading
 
   return (
     <button
-      onClick={onClick}
-      disabled={isDisabled}
       className={cn(
         baseStyles,
         sizes[size],
         variants[variant],
-        isDisabled
-          ? 'opacity-50 cursor-not-allowed'
-          : 'hover:opacity-90',
+        isDisabled && 'opacity-50 cursor-not-allowed',
         className
       )}
+      disabled={isDisabled}
+      {...ariaProps}
     >
-      {!loading && leftIcon && (
-        <span className="flex items-center">{leftIcon}</span>
-      )}
-
-      {loading ? 'Loading...' : children}
-
-      {!loading && rightIcon && (
-        <span className="flex items-center">{rightIcon}</span>
+      {loading ? (
+        <span className="flex items-center gap-2">
+          <span className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+          Loading...
+        </span>
+      ) : (
+        <span>{children}</span>
       )}
     </button>
   )

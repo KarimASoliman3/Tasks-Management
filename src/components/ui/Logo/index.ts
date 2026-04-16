@@ -1,2 +1,2 @@
-export { default as Logo } from '../../../public/logo.svg'
+// export { Logo } from './Logo'
 export type { LogoProps } from './types'
