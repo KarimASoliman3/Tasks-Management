@@ -7,6 +7,7 @@ import Home from './pages/Home'
 import ProtectedRoutes from './Routes/ProtectedRoutes'
 import AuthProtectedRoutes from './Routes/AuthProtectedRoutes'
 import Dashboard from './pages/Dashboard'
+import ForgetPassword from './pages/ForgetPassword/ForgetPassword'
 
 const router = createBrowserRouter([
   {
@@ -51,6 +52,14 @@ const router = createBrowserRouter([
           </AuthProtectedRoutes>
         ),
       },
+      {
+        path : 'forgot-password',
+        element :(
+          <AuthProtectedRoutes>
+            <ForgetPassword/>
+          </AuthProtectedRoutes>
+        )
+      }
     ],
   },
 ])
