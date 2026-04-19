@@ -45,7 +45,7 @@ export function SignUpForm() {
 
   const navigate = useNavigate();
 
- const onSubmit = async (data: SignUpFormData) => {
+ const signUp = async (data: SignUpFormData) => {
   try {
     setApiError(null)
 
@@ -74,7 +74,7 @@ export function SignUpForm() {
 }
 
   return (
-    <div className="min-h-screen max-w-xl flex flex-col items-center bg-white p-6 min-[390px]:p-12 rounded-lg shadow-[0px_24px_48px_0px_#041B3C0F]">
+    <div className="min-h-screen max-w-xl flex flex-col items-centerbg-background min-[390px]:bg-white p-6 min-[390px]:p-12 rounded-lg shadow-[0px_24px_48px_0px_#041B3C0F]">
       {/* Header */}
       <div className=" text-center space-y-[6.87px] min-[390px]:space-y-2 mb-10">
         <h1 className="font-semibold text-[28px] min-[390px]:text-3xl text-slate-900">Create your workspace </h1>
@@ -84,7 +84,7 @@ export function SignUpForm() {
       </div>
 
       {/* Form */}
-      <form onSubmit={handleSubmit(onSubmit)} className="w-full">
+      <form onSubmit={handleSubmit(signUp)} className="w-full">
         {/* Name */}
         <div className="mb-6">
           <Input

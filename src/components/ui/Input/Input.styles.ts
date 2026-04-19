@@ -17,7 +17,7 @@ export const labelStyle =
   'text-[10px] font-semibold uppercase text-slate-400'
 
 export const inputBase =
-  'w-full rounded-sm  px-4 py-3 text-body-md outline-none transition'
+  'w-full rounded-lg min-[390px]:rounded-sm  px-4 py-3 text-body-md outline-none transition'
 
 export const variants: Record<InputVariant, string> = {
   default: `

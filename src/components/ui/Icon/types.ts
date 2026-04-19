@@ -1,1 +1,1 @@
-export type IconSize = 'sm' | 'md' | 'lg'
+export type IconSize = 'mini'|'sm' | 'sm-x' | 'md' | 'lg'
