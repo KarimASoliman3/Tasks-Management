@@ -41,7 +41,7 @@ export const Logo = forwardRef<HTMLDivElement, LogoProps>(
       <div ref={ref} className={cn('inline-flex items-center', selected.gap, className)} {...props}>
         <img src={src} alt={alt} className={selected.img} />
 
-        <span className={cn('font-bold tracking-[-0.5px] text-[#041B3C]', selected.text)}>
+        <span className={cn('font-bold tracking-[-0.5px] text-slate-900', selected.text)}>
           {text}
         </span>
       </div>

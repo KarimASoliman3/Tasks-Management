@@ -4,21 +4,23 @@
 
   --color-surface-highest: #d7e2ff;
   --color-surface-low: #f1f3ff;
+  
   --color-background: #f9f9ff;
   
 
   --color-slate-900: #041b3c;
   --color-slate-600: #4f5f7b;
-  --color-slate-300: #c3c6d6;
-
   --color-slate-500: #737685;
   --color-slate-400: #6B7280;
+  --color-slate-300: #c3c6d6;
 
 
   --color-success: #82f9be;
+  
   --color-error: #ba1a1a;
   --color-error-900: #93000A;
   --color-error-200: #FFDAD6;
+
   --color-warning: #ffb300;
 
   --font-sans: Inter, sans-serif;

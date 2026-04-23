@@ -27,16 +27,13 @@ export function Icon({
   alt,
   color,
 }: Props) {
+  const SvgIcon = icons[name]
   return (
-    <img
-      color={color || ''}
-      src={icons[name]}
-      alt={alt || name}
-      className={cn(
-        sizes[size],
-        'inline-block',
-        className
-      )}
+    <SvgIcon
+      className={cn(sizes[size], 'inline-block [&_path]:fill-current', className)}
+      style={color ? { color } : undefined}
+      aria-label={alt || name}
+      role="img"
     />
   )
 }

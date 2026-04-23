@@ -6,6 +6,7 @@ const config: Config = {
     extend: {
       screens: {
         xs: '390px',
+        xl: '1280px',
       },
       colors: {
         primary: 'var(--color-primary)',
@@ -21,11 +22,18 @@ const config: Config = {
         slate: {
           900: 'var(--color-slate-900)',
           600: 'var(--color-slate-600)',
+          500: 'var(--color-slate-500)',
+          400: 'var(--color-slate-400)',
           300: 'var(--color-slate-300)',
         },
 
         success: 'var(--color-success)',
-        error: 'var(--color-error)',
+
+        error:{
+          default: 'var(--color-error)',
+          900: 'var(--color-error-900)',
+          200: 'var(--color-error-200)',
+        },
         warning: 'var(--color-warning)',
       },
 
@@ -41,7 +49,6 @@ const config: Config = {
           {
             lineHeight: '56px',
             letterSpacing: '-2.8px',
-            // fontWeight: '700',
           },
         ],
 

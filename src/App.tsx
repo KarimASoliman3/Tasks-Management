@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import AuthLayout from './components/layout/AuthLayout/AuthLayout'
-import MainLayout from './components/layout/MainLayout'
+import MainLayout from './components/layout/MainLayout/MainLayout'
 import SignUp from './pages/SignUp/SignUp'
 import Login from './pages/Login/Login'
 import Home from './pages/Home'
@@ -8,6 +8,7 @@ import ProtectedRoutes from './Routes/ProtectedRoutes'
 import AuthProtectedRoutes from './Routes/AuthProtectedRoutes'
 import Dashboard from './pages/Dashboard'
 import ForgetPassword from './pages/ForgetPassword/ForgetPassword'
+import NotFoundPage from './pages/NotFoundPage'
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,14 @@ const router = createBrowserRouter([
             <Dashboard />
           </ProtectedRoutes>
         ),
+      },
+      {
+        path : '*',
+        element : (
+          <ProtectedRoutes>
+            <NotFoundPage />
+          </ProtectedRoutes>
+        )
       }
     ],
   },
