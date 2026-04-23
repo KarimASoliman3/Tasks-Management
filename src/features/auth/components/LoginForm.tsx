@@ -45,17 +45,14 @@ export function LoginForm() {
   auth?.login(); // 🔥 IMPORTANT
 
   toast.success('Logged in successfully');
-
-  navigate('/dashboard');
-  console.log(navigate);
-  
+  navigate('/');
 };
 
   return (
-    <div className=" max-w-120 flex flex-col items-center bg-white p-6 min-[390px]:p-12 rounded-lg shadow-[0px_24px_48px_0px_#041B3C0F]">
+    <div className=" max-w-120 flex flex-col items-center bg-white p-6 xs:p-12 rounded-lg shadow-[0px_24px_48px_0px_#041B3C0F]">
       {/* Header */}
-      <div className=" text-center space-y-[6.87px] min-[390px]:space-y-2 mb-10">
-        <h1 className="font-semibold text-[28px] min-[390px]:text-3xl text-slate-900">
+      <div className=" text-center space-y-[6.87px] xs:space-y-2 mb-10">
+        <h1 className="font-semibold text-[28px] xs:text-3xl text-slate-900">
           Welcome Back{' '}
         </h1>
         <p className="text-slate-600 text-[14px]">

@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { z } from 'zod'
@@ -38,24 +38,26 @@ export function ForgetPasswordForm() {
 
   // 🔄 Reset attempts when email changes
   useEffect(() => {
+    if (!email) {
     setAttempts(0)
     setTimer(0)
     setApiMessage(null)
+    }
   }, [email])
 
   // ⏱ Timer
   useEffect(() => {
-    if (timer <= 0) return
+  if (timer <= 0) return
 
-    const interval = setInterval(() => {
-      setTimer((prev) => prev - 1)
-    }, 1000)
+  const timeout = setTimeout(() => {
+    setTimer((prev) => prev - 1)
+  }, 1000)
 
-    return () => clearInterval(interval)
-  }, [timer])
+  return () => clearTimeout(timeout)
+}, [timer])
 
   // 📡 API
-  const sendRequest = async (data: ForgotFormData) => {
+  const sendRequest =useCallback(async (data: ForgotFormData) => {
     try {
       setLoading(true)
       setApiMessage(null)
@@ -84,18 +86,19 @@ export function ForgetPasswordForm() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [])
 
-  const onSubmit = (data: ForgotFormData) => {
+  const onSubmit =useCallback((data: ForgotFormData) => {
     if (attempts >= 3) {
       toast.error('You have reached maximum attempts')
       return
     }
 
     sendRequest(data)
-  }
+  }, [attempts])
 
   const resendDisabled = loading || timer > 0 || attempts >= 3
+  const goToLogin = useCallback(() => navigate('/login'), [navigate])
 
   return (
     <div className="max-w-md mx-auto bg-white p-8 rounded-lg shadow">
@@ -103,7 +106,7 @@ export function ForgetPasswordForm() {
       
 
       {/* Header */}
-      <div className=" space-y-[6.87px] min-[390px]:space-y-2 mb-10">
+      <div className=" space-y-[6.87px] xs:space-y-2 mb-10">
         <h1 className="text-headline-lg font-semibold mb-2">Forgot password?</h1>
 
       <p className="text-sm text-[#434654] mb-6">No worries, we’ll send you reset instructions.</p>
@@ -128,7 +131,7 @@ export function ForgetPasswordForm() {
         {/* BACK */}
         <div className="pt-6 text-center text-[14px] text-primary font-semibold">
           <p
-            onClick={() => navigate('/login')}
+            onClick={goToLogin}
             className="flex items-center justify-center gap-1 cursor-pointer hover:text-primary-container"
           >
             <Icon name="arrowLeft" size="sm" />

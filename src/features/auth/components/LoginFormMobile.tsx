@@ -49,8 +49,7 @@ export function LoginFormMobile() {
     auth?.login()
 
     toast.success('Logged in successfully')
-
-    navigate('/dashboard')
+    navigate('/');
   }
 
   return (
