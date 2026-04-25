@@ -2,6 +2,9 @@ import { useState } from 'react'
 import { Logo } from '../../../ui/Logo/Logo'
 import { Icon, type IconName } from '../../../ui/Icon'
 import { NavLink } from 'react-router-dom'
+import { useAppDispatch } from '../../../../store/hooks'
+import { logout } from '../../../../store/slices/authSlice'
+import { clearUser } from '../../../../store/slices/userSlice'
 
 interface Props {
   isMobile: boolean
@@ -12,6 +15,12 @@ interface Props {
 }
 
 export function Sidebar({ isMobile, isOpen, isCollapsed, onClose, onToggleCollapse }: Props) {
+  const dispatch = useAppDispatch()
+
+  const handleLogout = () => {
+    dispatch(logout())
+    dispatch(clearUser())
+  }
   const menuItems: {
     label: string
     icon: IconName
@@ -83,7 +92,10 @@ export function Sidebar({ isMobile, isOpen, isCollapsed, onClose, onToggleCollap
 
             {/* footer */}
             <div className="mt-auto border-t border-[#C3C6D633] pt-6 space-y-1">
-              <div className="flex gap-2 items-center py-2.5 px-3 text-error-default">
+              <div
+                onClick={handleLogout}
+                className="flex gap-2 items-center py-2.5 px-3 text-error-default cursor-pointer"
+              >
                 <Icon name="logout" size="sm" />
                 <span className="font-medium text-body-md">Logout</span>
               </div>
@@ -166,6 +178,7 @@ export function Sidebar({ isMobile, isOpen, isCollapsed, onClose, onToggleCollap
 
         {/* Logout */}
         <div
+          onClick={handleLogout}
           className={`group relative py-2.5 flex items-center text-error-default cursor-pointer
           ${isCollapsed ? 'justify-center' : 'gap-3 px-3'}`}
         >
