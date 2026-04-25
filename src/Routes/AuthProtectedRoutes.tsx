@@ -1,19 +1,8 @@
-import { useContext } from "react";
-import { Navigate } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
+import { Navigate } from 'react-router-dom'
+import { useAppSelector } from '../store/hooks'
 
-export default function AuthProtectedRoutes({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const auth = useContext(AuthContext);
+export default function AuthProtectedRoutes({ children }: { children: React.ReactNode }) {
+  const { isLoggedIn } = useAppSelector((state) => state.auth)
 
-  if (!auth) {
-    throw new Error("AuthContext must be used within AuthContextProvider");
-  }
-
-  const { isLoggedIn } = auth;
-
-  return !isLoggedIn ? children : <Navigate to="/" replace />;
+  return !isLoggedIn ? children : <Navigate to="/" replace />
 }
