@@ -2,12 +2,15 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '../../../components/ui/Button'
 import { Input } from '../../../components/ui/Input/Input'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import { loginSchema, type LoginFormData } from '../validation/loginSchema'
 import { sendLoginData } from '../api/login'
-import { AuthContext } from '../../../context/AuthContext'
+import { useAppDispatch } from '../../../store/hooks'
+import { login } from '../../../store/slices/authSlice'
+import { fetchUserData } from '../../../store/slices/userSlice'
+import { getTokenExpirationDate } from '../../../utils/tokenUtils'
 import { Icon } from '../../../components/ui/Icon'
 
 export function LoginFormMobile() {
@@ -15,7 +18,7 @@ export function LoginFormMobile() {
   const [showPassword] = useState(false)
 
   const navigate = useNavigate()
-  const auth = useContext(AuthContext)
+  const dispatch = useAppDispatch()
 
   const {
     register,
@@ -39,17 +42,28 @@ export function LoginFormMobile() {
       return
     }
 
+    // ✅ Validate tokens exist before storing
+    if (!response.access_token) {
+      const message = 'Login failed: No access token received'
+      setApiError(message)
+      toast.error(message)
+      return
+    }
+
     const { access_token, refresh_token, user } = response
 
-    document.cookie = `access_token=${access_token}; path=/`
-    document.cookie = `refresh_token=${refresh_token}; path=/`
+    const expiryDate = getTokenExpirationDate(access_token)
+    const expiresAttr = expiryDate ? `; expires=${expiryDate.toUTCString()}` : ''
+    document.cookie = `access_token=${access_token}; path=/${expiresAttr}`
+    document.cookie = `refresh_token=${refresh_token || ''}; path=/${expiresAttr}`
 
     localStorage.setItem('user', JSON.stringify(user))
 
-    auth?.login()
+    dispatch(login())
+    dispatch(fetchUserData())
 
     toast.success('Logged in successfully')
-    navigate('/');
+    navigate('/')
   }
 
   return (
@@ -122,7 +136,7 @@ export function LoginFormMobile() {
           {/* BUTTON */}
           <Button loading={isSubmitting} className="w-full">
             {isSubmitting ? 'Logging in...' : 'Log In'}
-            <Icon name='arrowRight' size='sm' className='ml-2'/>
+            <Icon name="arrowRight" size="sm" className="ml-2" />
           </Button>
 
           {/* ERROR */}

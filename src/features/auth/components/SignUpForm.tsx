@@ -49,7 +49,17 @@ export function SignUpForm() {
   try {
     setApiError(null)
 
-    const response = await sendRegisterData(data, '/signup')
+    // Map to Supabase-compatible signup payload
+    const payload = {
+      email: data.email,
+      password: data.password,
+      data: {
+        name: data.name,
+        job_title: data.jobTitle,
+      },
+    }
+
+    const response = await sendRegisterData(payload, '/signup')
 
     // ❌ ERROR CASE
     if (response?.error) {
@@ -74,10 +84,10 @@ export function SignUpForm() {
 }
 
   return (
-    <div className="min-h-screen max-w-xl flex flex-col items-centerbg-background min-[390px]:bg-white p-6 min-[390px]:p-12 rounded-lg shadow-[0px_24px_48px_0px_#041B3C0F]">
+    <div className="min-h-screen max-w-xl flex flex-col items-centerbg-background xs:bg-white p-6 xs:p-12 rounded-lg shadow-[0px_24px_48px_0px_#041B3C0F]">
       {/* Header */}
-      <div className=" text-center space-y-[6.87px] min-[390px]:space-y-2 mb-10">
-        <h1 className="font-semibold text-[28px] min-[390px]:text-3xl text-slate-900">Create your workspace </h1>
+      <div className=" text-center space-y-[6.87px] xs:space-y-2 mb-10">
+        <h1 className="font-semibold text-[28px] xs:text-3xl text-slate-900">Create your workspace </h1>
         <p className="text-slate-600 text-[14px]">
           Join the editorial approach to task management.
         </p>

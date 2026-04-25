@@ -2,17 +2,20 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '../../../components/ui/Button'
 import { Input } from '../../../components/ui/Input/Input'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import { loginSchema, type LoginFormData } from '../validation/loginSchema'
 import { sendLoginData } from '../api/login'
-import { AuthContext } from '../../../context/AuthContext'
+import { useAppDispatch } from '../../../store/hooks'
+import { login } from '../../../store/slices/authSlice'
+import { fetchUserData } from '../../../store/slices/userSlice'
+import { getTokenExpirationDate } from '../../../utils/tokenUtils'
 
 export function LoginForm() {
   const [apiError, setApiError] = useState<string | null>(null)
   const navigate = useNavigate()
-  const auth = useContext(AuthContext)
+  const dispatch = useAppDispatch()
 
   const {
     register,
@@ -24,37 +27,46 @@ export function LoginForm() {
     mode: 'onBlur',
   })
 
-
   const Login = async (data: LoginFormData) => {
-  setApiError(null);
-  const response = await sendLoginData(data);
-  if (response?.error) {
-    const message = response.msg || 'Login failed';
-    setApiError(message);
-    toast.error(message);
-    return;
+    setApiError(null)
+    const response = await sendLoginData(data)
+    if (response?.error) {
+      const message = response.msg || 'Login failed'
+      setApiError(message)
+      toast.error(message)
+      return
+    }
+
+    // ✅ Validate tokens exist before storing
+    if (!response.access_token) {
+      const message = 'Login failed: No access token received'
+      setApiError(message)
+      toast.error(message)
+      return
+    }
+
+    // ✅ SUCCESS CASE
+    const { access_token, refresh_token, user } = response
+
+    const expiryDate = getTokenExpirationDate(access_token)
+    const expiresAttr = expiryDate ? `; expires=${expiryDate.toUTCString()}` : ''
+    document.cookie = `access_token=${access_token}; path=/${expiresAttr}`
+    document.cookie = `refresh_token=${refresh_token || ''}; path=/${expiresAttr}`
+
+    localStorage.setItem('user', JSON.stringify(user))
+
+    dispatch(login())
+    dispatch(fetchUserData())
+
+    toast.success('Logged in successfully')
+    navigate('/')
   }
-  // ✅ SUCCESS CASE
-  const { access_token, refresh_token, user } = response;
-
-  document.cookie = `access_token=${access_token}; path=/`;
-  document.cookie = `refresh_token=${refresh_token}; path=/`;
-
-  localStorage.setItem('user', JSON.stringify(user));
-
-  auth?.login(); // 🔥 IMPORTANT
-
-  toast.success('Logged in successfully');
-  navigate('/');
-};
 
   return (
     <div className=" max-w-120 flex flex-col items-center bg-white p-6 xs:p-12 rounded-lg shadow-[0px_24px_48px_0px_#041B3C0F]">
       {/* Header */}
       <div className=" text-center space-y-[6.87px] xs:space-y-2 mb-10">
-        <h1 className="font-semibold text-[28px] xs:text-3xl text-slate-900">
-          Welcome Back{' '}
-        </h1>
+        <h1 className="font-semibold text-[28px] xs:text-3xl text-slate-900">Welcome Back </h1>
         <p className="text-slate-600 text-[14px]">
           Please enter your details to access your workspace
         </p>
